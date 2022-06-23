@@ -18,8 +18,7 @@ jobs:
           name: "Say hello"
           command: "echo Hello, World!"
 
-
-jobs:
+  # Job for a print_hello workflow
   print_hello:
     # Invoke the job defined above.
     docker:
@@ -31,8 +30,7 @@ jobs:
       - run:
           name: "Print hello"
           command: "echo Hello"
-
-jobs:
+  # Job for a print_world workflow
   print_world:
     # Invoke the job defined above.
     docker:
@@ -51,12 +49,10 @@ workflows:
     jobs:
       - say-hello
 
-  print_hello-workflow:
+  print_hello-world-workflow:
     jobs:
       - print_hello
-  print_world-workflow:
-    jobs:
-      - print_world # Invoke the job defined above.
-      -requires:
-        - print_hello
+      - print_world
+        requires: 
+          - print_hello
 
