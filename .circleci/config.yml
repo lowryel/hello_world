@@ -52,7 +52,7 @@ workflows:
   print_hello-world-workflow:
     jobs:
       - print_hello
-      - print_world
+      - print_world:
           requires: 
             - print_hello
 
