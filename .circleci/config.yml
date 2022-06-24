@@ -61,7 +61,7 @@ jobs:
   # Job for a failed test
   on_fail_test:
     docker:
-      - image: cimg/node: 13.8.0
+    - image: circleci/node:8.11.1
     steps:
       - run: return 1
 
