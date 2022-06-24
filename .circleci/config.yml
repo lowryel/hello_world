@@ -31,7 +31,7 @@ jobs:
           command: echo "Hello world" > ~/output.txt
       - persist_to_workspace:
           root: ~/
-          path: 
+          paths: 
             - output.txt
       
   # Job for a print_world workflow
