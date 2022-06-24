@@ -8,7 +8,7 @@ commands:
     steps:
       - run:
           name: print-pipeline-id
-          command: echo "PIPELINE_ID: $CIRCLE_WORKFLOW_ID"
+          command: echo "PIPELINE_ID:" $CIRCLE_WORKFLOW_ID
 
 
 # Define a job to be invoked later in a workflow.
