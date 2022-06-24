@@ -58,6 +58,16 @@ jobs:
           at: ~/
       - run: cat ~/output.txt
 
+  # Job for a failed test
+  on_fail_test:
+    docker:
+      -image: cimg/node: 13.8.0
+    steps:
+      - checkout
+      - run: return 1
+
+      - run: echo "Test failed"
+          when: on_fail
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -72,4 +82,9 @@ workflows:
       - print_output_file:
           requires: 
             - save_hello_world_output
+
+  # Workflow for a failed test
+  on_fail_test_workflow:
+    jobs:
+      - on_fail_test
 
