@@ -61,12 +61,12 @@ jobs:
   # Job for a failed test
   on_fail_test:
     docker:
-      -image: cimg/node: 13.8.0
+      - image: cimg/node: 13.8.0
     steps:
-      - checkout
-      - run: return 1
+      - run: exit 1
 
-      - run: echo "Test failed"
+      - run: 
+          command: echo "Test failed"
           when: on_fail
 
 # Invoke jobs via workflows
