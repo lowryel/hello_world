@@ -4,11 +4,11 @@ version: 2.1
 
 commands:
   print_pipeline_id:
-    description: "a command to get our circle workflow id"
+    parameters:
+      id:
+        type: string
     steps:
-      - run:
-          name: print-pipeline-id
-          command: echo "PIPELINE_ID:" $CIRCLE_WORKFLOW_ID
+      - run: echo << parameters.id >>
 
 
 # Define a job to be invoked later in a workflow.
@@ -18,13 +18,13 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/base:stable
+    - image: cimg/base:stable
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
+      - checkout
       - print_pipeline_id:
-
-
+          id: << pipeline.id >>
 
 
   # Job for a print_hello workflow
