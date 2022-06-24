@@ -19,7 +19,7 @@ jobs:
           command: "echo Hello, World!"
 
   # Job for a print_hello workflow
-  print_hello:
+  save_hello_world_output:
     # Invoke the job defined above.
     docker:
     - image: circleci/python:3.6
@@ -28,29 +28,25 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Print hello"
-          command: "echo Hello"
+          command: echo "Hello world" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          path: 
+            - output.txt
+      
   # Job for a print_world workflow
-  print_world:
+  print_output_file:
     # Invoke the job defined above.
     docker:
     - image: circleci/python:3.6
 
     # Add steps to the job
     steps:
-      - checkout
-      - run:
-          name: "Print world"
-          command: "echo World"
+      - attach_workspace:
+          at: ~/
+      - run: cat ~/output.txt
 
-  env_var:
-    docker: 
-    - image: cimg/base:2020.01
-    steps:
-      - checkout
-      - run:
-          name: "Print env var"
-          command: echo $MY_NAME
+
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -58,11 +54,10 @@ workflows:
     jobs:
       - say-hello
 
-  print_hello-world-workflow:
+  print_hello-world-output-workflow:
     jobs:
-      - print_hello
-      - print_world:
+      - save_hello_world_output
+      - print_output_file:
           requires: 
-            - print_hello
-      - env_var
+            - save_hello_world_output
 
