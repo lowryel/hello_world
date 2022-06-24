@@ -2,6 +2,15 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
+commands:
+  print_pipeline_id:
+    description: "a command to get our pipeline id"
+    steps:
+      - run:
+          name: print-pipeline-id
+          command: echo "PIPELINE_ID: $CIRCLE_WORKFLOW_ID"
+
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -13,10 +22,10 @@ jobs:
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      - print_pipeline_id:
+
+
+
 
   # Job for a print_hello workflow
   save_hello_world_output:
